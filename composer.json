@@ -1,0 +1,26 @@
+{
+    "name": "tentacode/fix-php-namespace",
+    "description": "PHP script to fix PHP namespaces",
+    "type": "project",
+    "license": "WTFPL – Do What the Fuck You Want to Public License",
+    "authors": [
+        {
+            "name": "tentacode",
+            "email": "contact@gabrielpillet.com"
+        }
+    ],
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload" : {
+        "psr-4": { "Tentacode\\": "src" }
+    },
+    "require": {
+        "php": ">=7.0",
+        "symfony/finder": "^3.2",
+        "mnapoli/silly": "^1.5"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^3.2"
+    }
+}
