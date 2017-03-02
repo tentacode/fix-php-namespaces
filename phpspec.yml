@@ -1,0 +1,4 @@
+suites:
+   default:
+       namespace: Tentacode
+       psr4_prefix: Tentacode
