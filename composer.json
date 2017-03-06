@@ -16,7 +16,7 @@
         "psr-4": { "Tentacode\\": "src" }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "symfony/finder": "^3.2",
         "mnapoli/silly": "^1.5"
     },
