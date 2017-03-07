@@ -70,8 +70,38 @@ class FixNamespaceCommand
     
         $output->writeln(sprintf('<info>%s file(s) with a wrong namespace fixed!</info>', count($wrongNamespaces)));
         
+        $this->fixSpecFiles($wrongNamespaces);
+        
         $allPhpFiles = $this->fileRepository->getPhpFiles($this->workingDirectory);
         $this->replaceNamespacesOccurences($allPhpFiles, $wrongNamespaces);
+    }
+    
+    protected function fixSpecFiles(array $wrongNamespaces)
+    {
+        $specDirectory = $this->workingDirectory.'/spec';
+        if (!is_dir($specDirectory)) {
+            return;
+        }
+        
+        $alias = $this->getSourceDirectoryAlias();
+        foreach ($wrongNamespaces as $actualNamespace => $newNamespace) {
+            $specFilepath = sprintf(
+                '%s/%sSpec.php',
+                $specDirectory,
+                str_replace([$alias, '\\'],  ['', '/'], $actualNamespace)
+            );
+            
+            if (is_file($specFilepath)) {
+                $newSpecFilepath = sprintf(
+                    '%s/%sSpec.php',
+                    $specDirectory,
+                    str_replace([$alias, '\\'],  ['', '/'], $newNamespace)
+                );
+                
+                mkdir(dirname($newSpecFilepath), 0777, true);
+                system(sprintf('mv %s %s', $specFilepath, $newSpecFilepath));
+            }
+        }
     }
     
     protected function replaceNamespacesOccurences(iterable $files, array $namespaces)
